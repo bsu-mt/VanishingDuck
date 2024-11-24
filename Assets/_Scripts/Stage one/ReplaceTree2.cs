@@ -13,8 +13,8 @@ public class ReplaceTree2 : MonoBehaviour
         //这段触发条件需要做出修改，格式为做出交互--触发ReplaceTree，挂载脚本的兔子消失--玩家的Stage1_count+1
         if (!gameObject.activeInHierarchy)
         {
-            ReplaceTree(tree1, tree1_1);
-            Destroy(this)
+            ReplaceTree(tree2, tree1_2);
+            Destroy(this);
         }
     }
 

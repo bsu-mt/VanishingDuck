@@ -27,7 +27,7 @@ public class Start : MonoBehaviour
         GameObject obj = GameObject.FindWithTag(tag);
         if (obj != null)
         {
-            把物体移动到目标位置
+            // 把物体移动到目标位置
             obj.transform.position = targetPosition;
         }
     }

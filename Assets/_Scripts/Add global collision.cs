@@ -11,7 +11,7 @@ public class AddColliders : MonoBehaviour
         //可用的更新建议:设置你不想添加碰撞体积的标签物体并无视
 
         // if (obj.tag == "NoCollision")
-            // continue;
+        // continue;
 
         //以下代码会针对场景中的所有物体
         foreach (GameObject obj in FindObjectsOfType<GameObject>())
@@ -23,3 +23,4 @@ public class AddColliders : MonoBehaviour
             }
         }
     }
+}

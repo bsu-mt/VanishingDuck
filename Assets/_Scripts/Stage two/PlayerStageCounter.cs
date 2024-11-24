@@ -6,5 +6,5 @@ using UnityEngine;
 public class PlayerStageCounter : MonoBehaviour
 {
     public int Stage2_count = 0;
-    }
+    
 }

@@ -9,7 +9,7 @@ public class Flashback : MonoBehaviour
 {
     public Transform playerCamera; //摄像机（就是玩家角色）
     public float xThreshold = 30.55f; //绊线，超过这个线就会触发
-    public float speed = 20f; //冲刺速度，可以更快
+    public float speed = 15f; //冲刺速度，可以更快
     private Vector3 firstTarget = new Vector3(3.4f, -0.06f, -1.8f); //第一个拐点位置
     private Vector3 secondTarget = new Vector3(3.4f, -0.06f, -24f); //最终位置
     private bool triggered = false; 
@@ -17,7 +17,7 @@ public class Flashback : MonoBehaviour
     void Update()
     {
         //检查摄像机是否穿过绊线
-        if (!triggered && playerCamera.position.x > xThreshold)
+        if (!triggered && playerCamera.position.x < xThreshold)
         {
             triggered = true;
             StartCoroutine(MoveToTargets());

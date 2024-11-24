@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
-  m_configObjects: {}
+  m_Scenes:
+  - enabled: 1
+    path: Assets/_Scenes/VanishingRabbit.unity
+    guid: 97691574375ef7246814d7d5c1af8534
+  m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 13bb01e40b629884ab1496d759a8a08d, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 812bf05307a18b0478ec6a5f62e64e82, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 0ceb5e5df9169764e9da3f1a9186ff62, type: 2}

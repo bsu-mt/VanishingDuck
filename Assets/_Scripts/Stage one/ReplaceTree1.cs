@@ -14,7 +14,7 @@ public class ReplaceTree1 : MonoBehaviour
         if (!gameObject.activeInHierarchy)
         {
             ReplaceTree(tree1, tree1_1);
-            Destroy(this)
+            Destroy(this);
         }
     }
 
