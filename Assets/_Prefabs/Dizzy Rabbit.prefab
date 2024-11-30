@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 4565584966350412631}
   - component: {fileID: 178395033983828807}
   - component: {fileID: 5890294809922577813}
+  - component: {fileID: 6445755576283935380}
   m_Layer: 0
   m_Name: Dizzy Rabbit
   m_TagString: Blue rabbits
@@ -108,7 +109,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1029443580786942419}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 3bf3cfc6fabbb114abdd21a99e085c6f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -122,6 +123,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6445755576283935380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1029443580786942419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfe053b8e58b75442b9358f71cd2becc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 10
+  northBoundary: {fileID: 0}
+  eastBoundary: {fileID: 0}
+  westBoundary: {fileID: 0}
+  southBoundary: {fileID: 0}
+  boundaryBuffer: 1
 --- !u!1 &1739330794214965838
 GameObject:
   m_ObjectHideFlags: 0

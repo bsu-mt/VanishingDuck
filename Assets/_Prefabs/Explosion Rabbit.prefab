@@ -300,6 +300,7 @@ GameObject:
   - component: {fileID: 264768769984921151}
   - component: {fileID: -3272630463732968816}
   - component: {fileID: -435294008220345538}
+  - component: {fileID: 2515396871123942795}
   m_Layer: 0
   m_Name: Explosion Rabbit
   m_TagString: Red rabbits
@@ -357,6 +358,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94fed5730c615d34a9e2d2e5602cc9e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionForce: 5
+  explosionRadius: 2
 --- !u!65 &-435294008220345538
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -378,6 +381,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2515396871123942795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3949164264994039766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfe053b8e58b75442b9358f71cd2becc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 10
+  northBoundary: {fileID: 0}
+  eastBoundary: {fileID: 0}
+  westBoundary: {fileID: 0}
+  southBoundary: {fileID: 0}
+  boundaryBuffer: 1
 --- !u!1 &5265961037871690885
 GameObject:
   m_ObjectHideFlags: 0

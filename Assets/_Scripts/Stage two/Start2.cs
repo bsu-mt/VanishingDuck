@@ -17,7 +17,6 @@ public class Start2 : MonoBehaviour
     public int trueRabbitCount = 3;  
 
     public float spawnRange = 10f; 
-    public float moveSpeed = 10f;  //移动速度
     private bool triggered = false; 
 
     void Update()
@@ -35,25 +34,40 @@ public class Start2 : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            // 随机生成位置
             Vector3 randomPosition = GetRandomPositionOnGround();
 
-            // 创建兔子
+            // 动态生成兔子对象
             GameObject rabbit = Instantiate(prefab, randomPosition, Quaternion.identity);
             rabbit.tag = tag;
 
-            // 添加 Rigidbody 和随机移动脚本
-            Rigidbody rb = rabbit.AddComponent<Rigidbody>();
+            // 添加 Rigidbody 和其他必要组件
+            Rigidbody rb = rabbit.GetComponent<Rigidbody>();
+            if (rb == null) // 如果不存在 Rigidbody，则添加
+            {
+                rb = rabbit.AddComponent<Rigidbody>();
+            }
             rb.useGravity = true;
             rb.constraints = RigidbodyConstraints.FreezeRotation;
 
-            // 设置随机移动脚本的移动速度
-            RabbitRandomMove rabbitMove = rabbit.AddComponent<RabbitRandomMove>();
-            rabbitMove.moveSpeed = moveSpeed; // 从 Start2 传递
+            // 获取 RabbitRandomMove 脚本
+            RabbitRandomMove rabbitMove = rabbit.GetComponent<RabbitRandomMove>();
+            if (rabbitMove != null)
+            {
+                // 动态绑定边界对象
+                rabbitMove.northBoundary = GameObject.Find("north").transform;
+                rabbitMove.eastBoundary = GameObject.Find("east").transform;
+                rabbitMove.westBoundary = GameObject.Find("west").transform;
+                rabbitMove.southBoundary = GameObject.Find("south").transform;
 
-            Debug.Log($"Spawned rabbit with moveSpeed: {moveSpeed}");
+                // Debug.Log($"Boundaries set for rabbit {i + 1}");
+            }
+            else
+            {
+                Debug.LogError("RabbitRandomMove script not found on the prefab!");
+            }
         }
     }
+
 
 
     Vector3 GetRandomPositionOnGround()
@@ -66,49 +80,14 @@ public class Start2 : MonoBehaviour
         float randomX = Random.Range(groundPosition.x - spawnRange, groundPosition.x + spawnRange);
         float randomZ = Random.Range(groundPosition.z - 30 - spawnRange, groundPosition.z - 30 + spawnRange);
         float randomY = groundPosition.y;
-        Debug.Log($"GroundPositionX: {groundPosition.x}");
-        Debug.Log($"GroundPositionY: {groundPosition.y}");
-        Debug.Log($"GroundPositionZ: {groundPosition.z}");
+        // Debug.Log($"GroundPositionX: {groundPosition.x}");
+        // Debug.Log($"GroundPositionY: {groundPosition.y}");
+        // Debug.Log($"GroundPositionZ: {groundPosition.z}");
 
         return new Vector3(randomX, randomY, randomZ);
     }
 }
 
-public class RabbitRandomMove : MonoBehaviour
-{
-    public float moveSpeed; // 移动速度
 
-    private Vector3 moveDirection;
 
-    private Bounds courtyardBounds; // 场地边界
-
-    void Start()
-    {
-        // 随机初始化移动方向
-        moveDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
-    }
-
-    void FixedUpdate()
-    {
-        // 更新兔子的位置
-        transform.Translate(moveDirection * moveSpeed * Time.fixedDeltaTime, Space.World);
-
-        // 获取场地边界
-        GameObject courtyard = GameObject.Find("CourtyardSpace"); // 确保场地名称一致
-        if (courtyard != null)
-        {
-            courtyardBounds = courtyard.GetComponent<Collider>().bounds;
-        }
-        else
-        {
-            Debug.LogError("CourtyardSpace not found!");
-        }
-
-        // 如果碰撞到物体或出了边界，就随机更改方向
-        if (Physics.Raycast(transform.position, moveDirection, 0.5f) || !courtyardBounds.Contains(transform.position))
-        {
-            moveDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
-        }
-    }
-}
 

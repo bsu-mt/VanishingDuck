@@ -3,7 +3,20 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Blue rabbits
+  - Red rabbits
+  - True rabbits
+  - tree1
+  - Stage 1 rabbits
+  - tree1_1
+  - tree3
+  - tree1_3
+  - tree2
+  - Stage 1 rabbits 3
+  - tree1_2
+  - Stage 1 rabbits 2
+  - Ground
   layers:
   - Default
   - TransparentFX

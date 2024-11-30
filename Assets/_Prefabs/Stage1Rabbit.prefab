@@ -399,7 +399,7 @@ GameObject:
   - component: {fileID: 95131097399638280}
   - component: {fileID: 4862389065875289598}
   m_Layer: 0
-  m_Name: SlimeRabbit_Prefab
+  m_Name: Stage1Rabbit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -450,7 +450,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1773656247975474}
-  m_Material: {fileID: 13400000, guid: 3bf3cfc6fabbb114abdd21a99e085c6f, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

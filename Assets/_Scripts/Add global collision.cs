@@ -20,7 +20,7 @@ public class AddColliders : MonoBehaviour
         foreach (GameObject obj in FindObjectsOfType<GameObject>())
         {
             //添加一个物理碰撞，默认为BoxCollider
-            if (obj.GetComponent<Collider>() == null)
+            if (obj.GetComponent<Collider>() == null && obj.name != "north" && obj.name != "south" && obj.name != "west" && obj.name != "east")
             {
                 obj.AddComponent<BoxCollider>();
             }
