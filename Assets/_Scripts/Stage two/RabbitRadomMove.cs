@@ -44,10 +44,10 @@ public class RabbitRandomMove : MonoBehaviour
         Vector3 position = transform.position;
 
         // 检查是否接近四个边界
-        if (position.z > northBoundary.position.z - boundaryBuffer ||  // 接近北边界
-            position.z < southBoundary.position.z + boundaryBuffer ||  // 接近南边界
-            position.x > eastBoundary.position.x - boundaryBuffer ||   // 接近东边界
-            position.x < westBoundary.position.x + boundaryBuffer)     // 接近西边界
+        if (position.x < northBoundary.position.x + boundaryBuffer ||  // 接近北边界
+            position.x > southBoundary.position.x - boundaryBuffer ||  // 接近南边界
+            position.z > eastBoundary.position.z - boundaryBuffer ||   // 接近东边界
+            position.z < westBoundary.position.z + boundaryBuffer)     // 接近西边界
         {
             return true; // 靠近边界
         }

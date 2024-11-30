@@ -7,10 +7,13 @@ public class StageManager : MonoBehaviour
 {
     public static StageManager Instance; // 单例模式，方便全局访问
 
-    public int rabbitCount = 0; // 全局计数器
+    public int rabbitCount1 = 0; // Stage1计数器
+    public int rabbitCount2 = 0; // Stage2计数器
     public int requiredCount = 3; // 需要抓住的兔子数量
     public Start2 start2Script; // 引用 Start2 脚本
+    public Start3 start3Script; // 引用 Start3 脚本
     public bool isStage2 = false; // 是否为第二阶段
+    public bool isStage3 = false; // 是否为第三阶段
 
     public XRRayInteractor leftRayInteractor;  // 左手射线交互器
     public XRRayInteractor rightRayInteractor; // 右手射线交互器
@@ -30,16 +33,29 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    public void IncrementRabbitCount()
+    public void Stage1IncrementRabbitCount()
     {
-        rabbitCount++;
-        Debug.Log($"Global Rabbit Count: {rabbitCount}");
+        rabbitCount1++;
+        Debug.Log($"Stage 1 Rabbit Count: {rabbitCount1}");
 
-        if (rabbitCount >= requiredCount && start2Script != null)
+        if (rabbitCount1 >= requiredCount && start2Script != null)
         {
             start2Script.enabled = true; // 启动第二阶段
             isStage2 = true;
             Debug.Log("Stage 2 started!");
+        }
+    }
+
+    public void Stage2IncrementRabbitCount()
+    {
+        rabbitCount2++;
+        Debug.Log($"Stage 2 Rabbit Count: {rabbitCount2}");
+
+        if (rabbitCount2 >= requiredCount && start3Script != null)
+        {
+            start3Script.enabled = true; // 启动第三阶段
+            isStage3 = true;
+            Debug.Log("Stage 3 started!");
         }
     }
 
@@ -67,7 +83,6 @@ public class StageManager : MonoBehaviour
             {
                 Debug.LogError("XR Rig not found!");
             }
-
 
 
             // 禁用射线交互器

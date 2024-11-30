@@ -115,7 +115,7 @@ public class ReplaceTreeOnGrab : MonoBehaviour
             // 通知 StageManager 增加计数
             if (StageManager.Instance != null)
             {
-                StageManager.Instance.IncrementRabbitCount();
+                StageManager.Instance.Stage1IncrementRabbitCount();
             }
             else
             {
