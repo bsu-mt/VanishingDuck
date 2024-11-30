@@ -6,7 +6,9 @@ using UnityEngine;
 public class PlayerTeleport : MonoBehaviour
 {
     public int Stage1_count = 0; //玩家计数变量
+
     public Vector3 teleportPosition = new Vector3(38.95341f, 0.1199989f, 200.7748f); //目标传送位置
+
 
     void Update()
     {
@@ -20,6 +22,5 @@ public class PlayerTeleport : MonoBehaviour
     {
         // 将玩家传送到指定位置
         transform.position = teleportPosition;
-        Stage1_count = 0;
     }
 }

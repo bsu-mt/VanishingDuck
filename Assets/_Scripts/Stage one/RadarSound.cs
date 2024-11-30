@@ -9,11 +9,11 @@ public class RadarSound : MonoBehaviour
     public Transform[] targets;   //目标物体
     private int currentTargetIndex = 0; //当前目标
     private Transform currentTarget;    
-    private float minVolume = 3f;       //最小雷达音量
-    private float maxVolume = 9f;       //最大雷达音量
-    private float distanceThreshold1 = 20f; //声音近
+    private float minVolume = 0.1f;       //最小雷达音量
+    private float maxVolume = 1f;       //最大雷达音量
+    private float distanceThreshold1 = 20f; //声音远
     private float distanceThreshold2 = 10f; //声音中
-    private float distanceThreshold3 = 5f;  //声音远
+    private float distanceThreshold3 = 5f;  //声音近
 
     void Start()
     {
@@ -53,10 +53,14 @@ public class RadarSound : MonoBehaviour
                 currentTarget = null;
             }
         }
+
+        // Debug.Log($"Distance to target: {Vector3.Distance(transform.position, currentTarget.position)}");
+
     }
 
     void UpdateRadarSound(float distance)
     {
+        
         //根据距离调整音量
         if (distance > distanceThreshold1)
         {
@@ -74,5 +78,9 @@ public class RadarSound : MonoBehaviour
         {
             radarSound.volume = maxVolume;
         }
+
+        // Debug.Log($"Distance to target: {distance}, Volume set to: {radarSound.volume}");
+        radarSound.Play();
+
     }
 }

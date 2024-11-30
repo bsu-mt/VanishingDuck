@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class AddColliders : MonoBehaviour
 {
+    // 是否勾选 isTrigger 的选项
+    public bool setIsTrigger = true;
+
     void Start()
     {
         //可用的更新建议:设置你不想添加碰撞体积的标签物体并无视

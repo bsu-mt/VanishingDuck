@@ -6,7 +6,7 @@ using UnityEngine;
 public class Start2 : MonoBehaviour
 {
     public Transform player; //玩家
-    public Vector3 targetPosition = new Vector3(38.95341f, 0.1199989f, 200.7748f); //stage2的起始位置
+    // public Vector3 targetPosition = new Vector3(38.95341f, 0.1199989f, 200.7748f); //stage2的起始位置
     public GameObject blueRabbitPrefab; //晕头兔
     public GameObject redRabbitPrefab; //爆炸兔
     public GameObject trueRabbitPrefab; // 真兔子预制体
@@ -22,7 +22,7 @@ public class Start2 : MonoBehaviour
 
     void Update()
     {
-        if (!triggered && Vector3.Distance(player.position, targetPosition) < 0.1f)
+        if (!triggered) //&& Vector3.Distance(player.position, targetPosition) < 0.1f)
         {
             triggered = true;
             SpawnRabbits(blueRabbitPrefab, blueRabbitCount, "Blue rabbits");
@@ -35,20 +35,26 @@ public class Start2 : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            //随机生成位置
+            // 随机生成位置
             Vector3 randomPosition = GetRandomPositionOnGround();
 
-            //创建乱七八糟的兔子
+            // 创建兔子
             GameObject rabbit = Instantiate(prefab, randomPosition, Quaternion.identity);
             rabbit.tag = tag;
 
-            //添加随机移动脚本和物理检测
+            // 添加 Rigidbody 和随机移动脚本
             Rigidbody rb = rabbit.AddComponent<Rigidbody>();
             rb.useGravity = true;
             rb.constraints = RigidbodyConstraints.FreezeRotation;
-            rabbit.AddComponent<RabbitRandomMove>().moveSpeed = moveSpeed;
+
+            // 设置随机移动脚本的移动速度
+            RabbitRandomMove rabbitMove = rabbit.AddComponent<RabbitRandomMove>();
+            rabbitMove.moveSpeed = moveSpeed; // 从 Start2 传递
+
+            Debug.Log($"Spawned rabbit with moveSpeed: {moveSpeed}");
         }
     }
+
 
     Vector3 GetRandomPositionOnGround()
     {
@@ -58,8 +64,11 @@ public class Start2 : MonoBehaviour
 
         //计算生成位置范围
         float randomX = Random.Range(groundPosition.x - spawnRange, groundPosition.x + spawnRange);
-        float randomZ = groundPosition.z;
+        float randomZ = Random.Range(groundPosition.z - 30 - spawnRange, groundPosition.z - 30 + spawnRange);
         float randomY = groundPosition.y;
+        Debug.Log($"GroundPositionX: {groundPosition.x}");
+        Debug.Log($"GroundPositionY: {groundPosition.y}");
+        Debug.Log($"GroundPositionZ: {groundPosition.z}");
 
         return new Vector3(randomX, randomY, randomZ);
     }
@@ -67,25 +76,39 @@ public class Start2 : MonoBehaviour
 
 public class RabbitRandomMove : MonoBehaviour
 {
-    public float moveSpeed = 10f; //兔子洞移动速度
+    public float moveSpeed; // 移动速度
 
     private Vector3 moveDirection;
 
+    private Bounds courtyardBounds; // 场地边界
+
     void Start()
     {
-        //随机初始化移动方向
-        moveDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f).normalized;
+        // 随机初始化移动方向
+        moveDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
     }
 
     void FixedUpdate()
     {
-        //更新兔子的位置
+        // 更新兔子的位置
         transform.Translate(moveDirection * moveSpeed * Time.fixedDeltaTime, Space.World);
 
-        //如果碰撞就换一个方向动
-        if (Physics.Raycast(transform.position, moveDirection, 0.5f))
+        // 获取场地边界
+        GameObject courtyard = GameObject.Find("CourtyardSpace"); // 确保场地名称一致
+        if (courtyard != null)
         {
-            moveDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f).normalized;
+            courtyardBounds = courtyard.GetComponent<Collider>().bounds;
+        }
+        else
+        {
+            Debug.LogError("CourtyardSpace not found!");
+        }
+
+        // 如果碰撞到物体或出了边界，就随机更改方向
+        if (Physics.Raycast(transform.position, moveDirection, 0.5f) || !courtyardBounds.Contains(transform.position))
+        {
+            moveDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
         }
     }
 }
+

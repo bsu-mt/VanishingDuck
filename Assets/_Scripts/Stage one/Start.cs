@@ -6,19 +6,21 @@ using UnityEngine;
 public class Start : MonoBehaviour
 {
     public Transform playerCamera; 
-    public float xThreshold = 13.88f; //这里是绊线
+    public float xThreshold = 2f; //这里是绊线
 
     private bool triggered = false;
 
     void Update()
     {
-        if (!triggered && playerCamera.position.x > xThreshold)
+        if (!triggered && playerCamera.position.x < xThreshold)
         {
             triggered = true;
             //设定藏匿地点
-            MoveObject("Stage 1 rabbits", new Vector3(-3.232167f, -4.768372e-07f, 21.00322f));
-            MoveObject("Stage 1 rabbits 2", new Vector3(-20.62f, -4.768372e-07f, 27.58f));
-            MoveObject("Stage 1 rabbits 3", new Vector3(-4.29f, -4.768372e-07f, -26.49f));
+            MoveObject("Stage 1 rabbits", new Vector3(-8.29f, 0.0025f, -33.94f));
+            MoveObject("Stage 1 rabbits 2", new Vector3(-1.232167f, 3f, 19.80322f));
+            MoveObject("Stage 1 rabbits 3", new Vector3(-27.62f, 0.004f, 33.58f));
+            
+            
         }
     }
 
