@@ -17,6 +17,7 @@ TagManager:
   - tree1_2
   - Stage 1 rabbits 2
   - Ground
+  - Tree
   layers:
   - Default
   - TransparentFX

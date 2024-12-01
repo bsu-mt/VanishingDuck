@@ -6,6 +6,25 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Stage2RabbitGrab : MonoBehaviour
 {
+    private XRGrabInteractable grabInteractable;
+
+    void Start()
+    {
+        grabInteractable = GetComponent<XRGrabInteractable>();
+        if (grabInteractable != null)
+        {
+            grabInteractable.selectEntered.AddListener(OnGrabbed);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (grabInteractable != null)
+        {
+            grabInteractable.selectEntered.RemoveListener(OnGrabbed);
+        }
+    }
+
     private void OnGrabbed(SelectEnterEventArgs args)
     {
         gameObject.SetActive(false); // 抓取后隐藏兔子
@@ -13,7 +32,7 @@ public class Stage2RabbitGrab : MonoBehaviour
         // 通知 StageManager 增加计数
         if (StageManager.Instance != null)
         {
-            StageManager.Instance.Stage1IncrementRabbitCount();
+            StageManager.Instance.Stage2IncrementRabbitCount();
         }
         else
         {

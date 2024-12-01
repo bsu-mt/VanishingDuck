@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfe053b8e58b75442b9358f71cd2becc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 4
   northBoundary: {fileID: 0}
   eastBoundary: {fileID: 0}
   westBoundary: {fileID: 0}

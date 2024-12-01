@@ -74,7 +74,7 @@ public class StageManager : MonoBehaviour
                     // 如果不存在 Rigidbody，则添加
                     rb = xrRig.AddComponent<Rigidbody>();
                     rb.useGravity = true; // 开启重力
-                    rb.isKinematic = false; // 禁用 Kinematic
+                    rb.isKinematic = true; // 禁用 Kinematic
                     rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ; // 限制 X 和 Z 的旋转
                     Debug.Log("Rigidbody added to XR Rig");
                 }
@@ -85,36 +85,36 @@ public class StageManager : MonoBehaviour
             }
 
 
-            // 禁用射线交互器
-            if (leftRayInteractor != null)
-                leftRayInteractor.gameObject.SetActive(false);
+            //// 禁用射线交互器
+            //if (leftRayInteractor != null)
+            //    leftRayInteractor.gameObject.SetActive(false);
 
-            if (rightRayInteractor != null)
-                rightRayInteractor.gameObject.SetActive(false);
+            //if (rightRayInteractor != null)
+            //    rightRayInteractor.gameObject.SetActive(false);
 
-            // 启用直接交互器
-            if (leftDirectInteractor != null)
-                leftDirectInteractor.gameObject.SetActive(true);
+            //// 启用直接交互器
+            //if (leftDirectInteractor != null)
+            //    leftDirectInteractor.gameObject.SetActive(true);
 
-            if (rightDirectInteractor != null)
-                rightDirectInteractor.gameObject.SetActive(true);
+            //if (rightDirectInteractor != null)
+            //    rightDirectInteractor.gameObject.SetActive(true);
         }
-        else
-        {
-            // 恢复射线交互器
-            if (leftRayInteractor != null)
-                leftRayInteractor.gameObject.SetActive(true);
+        //else
+        //{
+        //    // 恢复射线交互器
+        //    if (leftRayInteractor != null)
+        //        leftRayInteractor.gameObject.SetActive(true);
 
-            if (rightRayInteractor != null)
-                rightRayInteractor.gameObject.SetActive(true);
+        //    if (rightRayInteractor != null)
+        //        rightRayInteractor.gameObject.SetActive(true);
 
-            // 禁用直接交互器
-            if (leftDirectInteractor != null)
-                leftDirectInteractor.gameObject.SetActive(false);
+        //    // 禁用直接交互器
+        //    if (leftDirectInteractor != null)
+        //        leftDirectInteractor.gameObject.SetActive(false);
 
-            if (rightDirectInteractor != null)
-                rightDirectInteractor.gameObject.SetActive(false);
-        }
+        //    if (rightDirectInteractor != null)
+        //        rightDirectInteractor.gameObject.SetActive(false);
+        //}
 
     }
 }
