@@ -16,14 +16,58 @@ public class Start2 : MonoBehaviour
     public int redRabbitCount = 10; 
     public int trueRabbitCount = 3;  
 
-    public float spawnRange = 10f; 
-    private bool triggered = false; 
+    public float spawnRange = 10f;
+    private bool audioPlayed = false; // 音频是否已经播放
+    private bool panelDisplayed = false; // 面板是否已经显示
+    private bool triggered = false; // 是否已经生成兔子
+
+    private AudioSource audioSource;
+    public AudioClip stage2IntroClip; // 手动拖入音频文件
+    public GameObject stage2IntroPanel; // 拖入 Stage2Intro 面板
+
+    void Start()
+    {
+        // 确保获取到 AudioSource
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        // 配置 AudioSource
+        if (stage2IntroClip != null)
+        {
+            audioSource.clip = stage2IntroClip;
+            audioSource.playOnAwake = false; // 防止自动播放
+        }
+
+        // 检查 Stage2IntroPanel 是否绑定
+        if (stage2IntroPanel == null)
+        {
+            Debug.LogError("StartMenu Panel is not assigned in the Inspector!");
+        }
+    }
 
     void Update()
     {
-        if (!triggered) //&& Vector3.Distance(player.position, targetPosition) < 0.1f)
+        // 播放Stage2Intro音频
+        if (!audioPlayed)
         {
-            triggered = true;
+            PlayStage2Audio();
+            audioPlayed = true; // 标记音频已播放
+        }
+
+        // 显示Stage2Intro面板
+        if (!panelDisplayed && stage2IntroPanel != null)
+        {
+            stage2IntroPanel.SetActive(true);
+            panelDisplayed = true; // 标记面板已显示
+        }
+
+        // 检查面板是否已经关闭，并生成兔子
+        if (!triggered && stage2IntroPanel != null && !stage2IntroPanel.activeSelf)
+        {
+            triggered = true; // 标记兔子已生成
             SpawnRabbits(blueRabbitPrefab, blueRabbitCount, "Blue rabbits");
             SpawnRabbits(redRabbitPrefab, redRabbitCount, "Red rabbits");
             SpawnRabbits(trueRabbitPrefab, trueRabbitCount, "True rabbits");
@@ -85,6 +129,20 @@ public class Start2 : MonoBehaviour
         // Debug.Log($"GroundPositionZ: {groundPosition.z}");
 
         return new Vector3(randomX, randomY, randomZ);
+    }
+
+    public void PlayStage2Audio()
+    {
+        if (audioSource != null && audioSource.clip != null)
+        {
+            audioSource.volume = 1f; // 确保音量最大
+            audioSource.Play(); // 播放音频
+            Debug.Log("Playing audio: " + audioSource.clip.name);
+        }
+        else
+        {
+            Debug.LogWarning("AudioSource or AudioClip is missing!");
+        }
     }
 }
 

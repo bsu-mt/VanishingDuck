@@ -12,7 +12,28 @@ public class Flashback : MonoBehaviour
     public float speed = 15f; //冲刺速度，可以更快
     private Vector3 firstTarget = new Vector3(3.4f, -0.06f, -1.8f); //第一个拐点位置
     private Vector3 secondTarget = new Vector3(3.4f, -0.06f, -24f); //最终位置
-    private bool triggered = false; 
+    private bool triggered = false;
+
+    private AudioSource audioSource;
+    public AudioClip flashBackClip; // 手动拖入音频文件
+
+    void Start()
+    {
+        // 确保获取到 AudioSource
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        // 配置 AudioSource
+        if (flashBackClip != null)
+        {
+            audioSource.clip = flashBackClip;
+            audioSource.playOnAwake = false; // 防止自动播放
+        }
+
+    }
 
     void Update()
     {
@@ -29,6 +50,8 @@ public class Flashback : MonoBehaviour
         //冲刺到拐点
         yield return StartCoroutine(MoveToPosition(firstTarget));
 
+        PlayFlashBackAudio();
+
         //左转消失
         yield return StartCoroutine(MoveToPosition(secondTarget));
     }
@@ -42,6 +65,19 @@ public class Flashback : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
             yield return null; 
+        }
+    }
+
+    public void PlayFlashBackAudio()
+    {
+        if (audioSource != null && audioSource.clip != null)
+        {
+            audioSource.Play(); // 播放音频
+            Debug.Log("Playing audio: " + audioSource.clip.name);
+        }
+        else
+        {
+            Debug.LogWarning("AudioSource or AudioClip is missing!");
         }
     }
 }

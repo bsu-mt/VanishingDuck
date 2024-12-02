@@ -28,34 +28,105 @@ public class Start3 : MonoBehaviour
     private AudioSource christmasSong;
 
     private bool isStage3Triggered = false;
+    private bool audioPlayed = false; // 控制音频播放
+    private bool panelDisplayed = false; // 控制面板显示
+
+    private AudioSource audioSource;
+    public AudioClip stage3IntroClip; // 手动拖入音频文件
+    public GameObject stage3IntroPanel; // 拖入 Stage3Intro 面板
+
+    void Start()
+    {
+        // 确保获取到 AudioSource
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        // 配置 AudioSource
+        if (stage3IntroClip != null)
+        {
+            audioSource.clip = stage3IntroClip;
+            audioSource.playOnAwake = false; // 防止自动播放
+        }
+
+        // 检查 Stage3IntroPanel 是否绑定
+        if (stage3IntroPanel == null)
+        {
+            Debug.LogError("StartMenu Panel is not assigned in the Inspector!");
+        }
+    }
 
     void Update()
     {
-        if (!isStage3Triggered)
+        if (!audioPlayed)
         {
-            isStage3Triggered = true;
+            PlayStage3Audio(); // 播放音频
+            audioPlayed = true;
+        }
+
+        if (!panelDisplayed && stage3IntroPanel != null)
+        {
+            stage3IntroPanel.SetActive(true); // 显示面板
+            panelDisplayed = true;
+            // 1. 玩家传送到特定位置
+            player.position = targetPosition;
+
+            // 2. 隐藏阶段 2 的红蓝兔子
+            // 查找红兔子和蓝兔子
+            GameObject[] redRabbits = GameObject.FindGameObjectsWithTag("Red rabbits");
+            GameObject[] blueRabbits = GameObject.FindGameObjectsWithTag("Blue rabbits");
+
+            // 合并数组
+            GameObject[] redAndBlueRabbits = redRabbits.Concat(blueRabbits).ToArray();
+
+            // 遍历并销毁所有红兔子和蓝兔子
+            foreach (GameObject rabbit in redAndBlueRabbits)
+            {
+                Destroy(rabbit);
+            }
+
+
+        }
+
+        if (!isStage3Triggered && stage3IntroPanel != null && !stage3IntroPanel.activeSelf)
+        {
+            isStage3Triggered = true; // 确保逻辑只执行一次
             StartCoroutine(TriggerStage3());
+        }
+    }
+    public void PlayStage3Audio()
+    {
+        if (audioSource != null && audioSource.clip != null)
+        {
+            audioSource.Play(); // 播放音频
+            Debug.Log("Playing audio: " + audioSource.clip.name);
+        }
+        else
+        {
+            Debug.LogWarning("AudioSource or AudioClip is missing!");
         }
     }
 
     IEnumerator TriggerStage3()
     {
-        // 1. 玩家传送到特定位置
-        player.position = targetPosition;
+        //// 1. 玩家传送到特定位置
+        //player.position = targetPosition;
 
-        // 2. 隐藏阶段 2 的红蓝兔子
-        // 查找红兔子和蓝兔子
-        GameObject[] redRabbits = GameObject.FindGameObjectsWithTag("Red rabbits");
-        GameObject[] blueRabbits = GameObject.FindGameObjectsWithTag("Blue rabbits");
+        //// 2. 隐藏阶段 2 的红蓝兔子
+        //// 查找红兔子和蓝兔子
+        //GameObject[] redRabbits = GameObject.FindGameObjectsWithTag("Red rabbits");
+        //GameObject[] blueRabbits = GameObject.FindGameObjectsWithTag("Blue rabbits");
 
-        // 合并数组
-        GameObject[] redAndBlueRabbits = redRabbits.Concat(blueRabbits).ToArray();
+        //// 合并数组
+        //GameObject[] redAndBlueRabbits = redRabbits.Concat(blueRabbits).ToArray();
 
-        // 遍历并销毁所有红兔子和蓝兔子
-        foreach (GameObject rabbit in redAndBlueRabbits)
-        {
-            Destroy(rabbit);
-        }
+        //// 遍历并销毁所有红兔子和蓝兔子
+        //foreach (GameObject rabbit in redAndBlueRabbits)
+        //{
+        //    Destroy(rabbit);
+        //}
 
 
         // 3. 在玩家身边生成 6 个真兔子
